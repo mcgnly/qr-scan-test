@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import QrReader from 'react-qr-reader';
 
-function App() {
+function ScanBox() {
+  const [data, setData] = useState('')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h2>Scan a box now:</h2>
+      {data ? 
+      <div>
+        <a href={data}>{data}</a> 
+        <button 
+        onClick={()=>setData('')}
+        className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
+        >Scan again</button>
+      </div>
+      :
+      <QrReader
+          delay={300}
+          onError={(err) => console.log(err)}
+          onScan={setData}
+          style={{ width: '100%' }}
+        />}
+        
     </div>
-  );
+  )
 }
 
-export default App;
+export default ScanBox;
